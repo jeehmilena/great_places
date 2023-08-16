@@ -20,34 +20,40 @@ class PlacesListScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Consumer<GreatPlaces>(
-        child: const Center(
-          child: Text('no registered location!'),
-        ),
-        builder: (ctx, greatPlaces, ch) => greatPlaces.itemsCount == 0
-            ? ch!
-            : ListView.builder(
-                itemCount: greatPlaces.itemsCount,
-                itemBuilder: (ctx, index) => Card(
-                  margin: const EdgeInsets.all(12),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: ListTile(
-                      titleAlignment: ListTileTitleAlignment.threeLine,
-                      leading: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: FileImage(
-                          greatPlaces.getItem(index).image,
+      body: FutureBuilder(
+        future: Provider.of<GreatPlaces>(context, listen: false).getPlaces(),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? const Center(child: CircularProgressIndicator())
+            : Consumer<GreatPlaces>(
+                child: const Center(
+                  child: Text('no registered location!'),
+                ),
+                builder: (ctx, greatPlaces, ch) => greatPlaces.itemsCount == 0
+                    ? ch!
+                    : ListView.builder(
+                        itemCount: greatPlaces.itemsCount,
+                        itemBuilder: (ctx, index) => Card(
+                          margin: const EdgeInsets.all(12),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: ListTile(
+                              titleAlignment: ListTileTitleAlignment.threeLine,
+                              leading: CircleAvatar(
+                                radius: 50,
+                                backgroundImage: FileImage(
+                                  greatPlaces.getItem(index).image,
+                                ),
+                              ),
+                              title: Text(
+                                greatPlaces.getItem(index).title,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              onTap: () {},
+                            ),
+                          ),
                         ),
                       ),
-                      title: Text(
-                        greatPlaces.getItem(index).title,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
-                ),
               ),
       ),
     );
