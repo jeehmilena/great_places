@@ -48,6 +48,10 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
     <key>NSCameraUsageDescription</key>
-    <string>Great Places uses the camera to allow you to take profile image.</string>
+    <string>Great Places uses the camera to allow you to take a picture.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Great Places need to get your location.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Great Places need to get your location.</string>
 </dict>
 </plist>
